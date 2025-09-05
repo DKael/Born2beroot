@@ -35,6 +35,12 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
   - SSH 포트 변경 및 root 로그인 차단
   - UFW 방화벽 기본 정책 설정 (deny incoming / allow outgoing)
   - cron job 등록 (예: 10분마다 시스템 모니터링 로그 기록)
+* 방화벽 고급 설정
+  - 특정 포트만 허용 (22, 80, 443)
+  - 불필요한 서비스 포트 차단
+* 모니터링 자동화 스크립트
+  - bash 스크립트로 CPU, RAM, Disk, Network 사용량 수집
+  - cron job으로 10분마다 실행하여 /var/log/monitoring.log에 기록
 
 ### ✅ 보너스 구현
 * WordPress + MariaDB 설치 및 설정
@@ -43,12 +49,6 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 * vsftpd 서버 구성
   - FTP 사용자 전용 계정 생성
   - TLS 기반 보안 FTP 설정
-* 방화벽 고급 설정
-  - 특정 포트만 허용 (22, 80, 443)
-  - 불필요한 서비스 포트 차단
-* 모니터링 자동화 스크립트
-  - bash 스크립트로 CPU, RAM, Disk, Network 사용량 수집
-  - cron job으로 10분마다 실행하여 /var/log/monitoring.log에 기록
 
 ---
 
