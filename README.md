@@ -62,26 +62,57 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 
 ---
 
-## 5️⃣ 사용 방법
+## 5️⃣ 주요 명령어
 
-### 📦 VirtualBox VM 실행
-bash
-```
-# VM 실행
-VBoxManage startvm "Born2beroot"
-```
+### 🖥️ 시스템 정보 & 모니터링
+	•	uname -a → 커널/시스템 정보 확인
+	•	hostnamectl → 호스트네임, OS 버전, 커널 버전 확인
+	•	lsblk → 디스크/파티션/LVM 구조 확인
+	•	df -h → 디스크 사용량 확인
+	•	free -m → 메모리 사용량 확인
+	•	uptime → 부팅 이후 경과 시간, 로드 평균 확인
+	•	who -b → 마지막 부팅 시간 확인
+	•	ps -ef / top / htop → 실행 중인 프로세스 확인
 
-### 🔑 SSH 접속
-bash
-```
-ssh <username>@<server_ip> -p <custom_port>
-```
+### 👤 사용자/권한 관리
+	•	adduser <username> → 새 사용자 생성
+	•	usermod -aG <group> <user> → 사용자 그룹 추가
+	•	groups <user> → 해당 사용자가 속한 그룹 확인
+	•	passwd <user> → 사용자 비밀번호 설정/변경
+	•	sudo visudo → sudoers 파일 수정 (권한 제어)
+	•	chmod / chown → 파일 권한 및 소유권 관리
+	•	ls -l → 파일 권한 확인
 
-### 🧾 시스템 모니터링 로그 확인
-bash
-```
-cat /var/log/monitoring.log
-```
+### 🔒 보안 관련
+	•	ufw enable / ufw status → 방화벽(UFW) 설정 및 상태 확인
+	•	ss -tuln / netstat -tuln → 열려있는 포트 확인
+	•	fail2ban-client status → Fail2ban 상태 확인 (SSH brute-force 방지)
+	•	systemctl status ssh → SSH 서비스 상태 확인
+	•	cat /etc/ssh/sshd_config → SSH 설정 확인 (ex: Port, PermitRootLogin)
+
+### 💾 서비스/패키지 관리
+	•	apt update && apt upgrade → 패키지 업데이트
+	•	apt install <pkg> / apt remove <pkg> → 패키지 설치/삭제
+	•	systemctl start|stop|restart <service> → 서비스 시작/중지/재시작
+	•	systemctl enable <service> → 부팅 시 자동 시작 등록
+
+### 📝 로그 확인
+	•	journalctl -xe → 시스템 로그 확인
+	•	tail -f /var/log/auth.log → 인증 로그 확인 (sudo/ssh)
+	•	cat /var/log/sudo.log → sudo 실행 로그 확인
+	•	last / lastlog → 사용자 로그인 기록 확인
+
+### 📦 LVM 관리
+	•	pvdisplay → Physical Volume 확인
+	•	vgdisplay → Volume Group 확인
+	•	lvdisplay → Logical Volume 확인
+	•	mount → 마운트된 파티션 확인
+
+### 🛠️ 스크립트 관련 (Monitoring.sh 같은 과제)
+	•	crontab -e → 크론 작업 등록
+	•	bash monitoring.sh → 스크립트 실행
+	•	chmod +x monitoring.sh → 실행 권한 부여
+ 	•	cat /var/log/monitoring.log → 시스템 모니터링 로그 확인
 
 ### 🌐 WordPress 접근
 웹 브라우저에서:
