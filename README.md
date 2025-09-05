@@ -134,18 +134,6 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 * cron을 통해 주기적 실행 (*/10 * * * *).
 * 필요 시 1분 간격으로 변경 가능 (*/1).
 
----
-
-
-## 3. Bonus Part (추가 구현)
-* Password Policy 강화: libpam-pwquality 활용, root 포함 모든 계정 적용.
-* Sudo 보안: 시도 횟수 제한, custom 메시지, 로그 기록.
-* Monitoring Script 확장:
-	- Inode 사용량
-	- Listening 포트 수 (TCP/UDP)
-	- 전체 프로세스 수
-* 방화벽 & Fail2ban: SSH brute-force 방지.
-* SSH 포트 변경: root 차단, 보안 강화를 위한 포트 관리.
 
 ---
 
