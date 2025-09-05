@@ -52,7 +52,104 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 
 ---
 
-## 4️⃣ 배운 점
+## 4️⃣ Project 정리
+
+## 1. General Instructions
+* signature.txt는 repository root에 존재해야 함.
+* .vdi 파일의 signature와 제출 signature가 일치해야 함.
+
+---
+
+## 2. Mandatory Part
+
+### (1) Project Overview
+* Virtual Machine (VM): 물리 서버에서 Hypervisor를 통해 여러 OS를 구동하는 기술.
+	- Type 1 (Bare-metal): 하드웨어 위에 직접 설치.
+	- Type 2 (Hosted): 호스트 OS 위에서 동작 (VirtualBox가 여기에 해당).
+* Host vs Guest: Hypervisor가 설치된 물리 장비 = Host / VM으로 실행되는 OS = Guest
+* CentOS vs Debian:
+	- CentOS: RHEL 기반, .rpm + yum, 기업 서버용.
+	- Debian: .deb + dpkg/APT, 패키지 관리 편리, Ubuntu 기반.
+* 장점: 비용 절감, 빠른 환경 구성, 다운타임 최소화.
+* aptitude vs apt: aptitude는 CLI+GUI, apt는 CLI 전용으로 간편.
+* AppArmor: 커널 보안 모듈, 프로그램 권한을 profile 기반으로 제어.
+
+---
+
+### (2) Simple Setup
+* GUI 비활성화 상태에서 부팅.
+* SSH, UFW 서비스 실행 확인.
+* 사용자 비밀번호는 정책(길이 10자 이상, 대문자+숫자 포함, 반복 제한 등)을 충족해야 함.
+
+---
+
+
+### (3) User Management
+* 사용자 계정은 sudo, user42 그룹에 속해야 함.
+* 새 사용자 추가 및 password policy 설정 가능해야 함.
+* evaluating 그룹을 만들고 사용자 추가.
+* Policy 장단점: 보안 강화 vs 사용자가 비밀번호를 기억하기 어려움.
+
+---
+
+
+### (4) Hostname & Partitions
+* Hostname 변경 및 복원 가능해야 함.
+* lsblk를 통한 파티션 구조 확인.
+* LVM (Logical Volume Manager): 물리 디스크를 논리적으로 묶어 유연한 관리 가능.
+	- PV(Physical Volume) → VG(Volume Group) → LV(Logical Volume) 구조.
+
+⸻
+
+### (5) SUDO
+* sudo 설치 여부 확인 (sudo --version).
+* usermod -aG sudo <user>로 사용자 권한 부여.
+* /etc/sudoers에서 secure_path, 로그 기록, 시도 횟수 제한 설정.
+* 장점: root 비밀번호 공유 불필요, log 추적 가능, 보안 강화.
+
+---
+
+
+### (6) UFW
+* Uncomplicated Firewall: iptables를 단순화한 방화벽 관리 툴.
+* 상태 확인: sudo ufw status
+* 포트 제어: sudo ufw allow 4242, 필요 시 추가/삭제 가능.
+* 사용 이유: 불필요한 네트워크 접근 차단, 보안 강화.
+
+---
+
+
+### (7) SSH
+* 원격 접속용 보안 프로토콜.
+* 모든 데이터는 암호화, Public/Private Key 기반 동작.
+* 포트는 4242만 허용, root 로그인 차단 필수.
+* 접속 예시: ssh user@ip -p 4242
+
+---
+
+
+### (8) Script Monitoring
+* 스크립트는 시스템 자원과 상태를 10분마다 출력해야 함.
+* 출력 항목: Architecture, CPU, Memory, Disk, 부하율, LVM, TCP 연결 수, User 수, Network 정보, sudo 실행 횟수 등.
+* cron을 통해 주기적 실행 (*/10 * * * *).
+* 필요 시 1분 간격으로 변경 가능 (*/1).
+
+---
+
+
+## 3. Bonus Part (추가 구현)
+* Password Policy 강화: libpam-pwquality 활용, root 포함 모든 계정 적용.
+* Sudo 보안: 시도 횟수 제한, custom 메시지, 로그 기록.
+* Monitoring Script 확장:
+	- Inode 사용량
+	- Listening 포트 수 (TCP/UDP)
+	- 전체 프로세스 수
+* 방화벽 & Fail2ban: SSH brute-force 방지.
+* SSH 포트 변경: root 차단, 보안 강화를 위한 포트 관리.
+
+---
+
+## 5️⃣ 배운 점
 	•	운영체제 설치 및 리눅스 기본 아키텍처 이해 (부팅, 파일시스템, 패키지 관리)
 	•	사용자 계정 관리와 권한 제어의 중요성
 	•	PAM, UFW, sudo 설정을 통해 보안 규칙을 구체적으로 적용하는 방법
@@ -62,7 +159,7 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 
 ---
 
-## 5️⃣ 주요 명령어
+## 6️⃣ 주요 명령어
 
 ### 🖥️ 시스템 정보 & 모니터링
 	•	uname -a → 커널/시스템 정보 확인
@@ -120,7 +217,7 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 http://<server_ip>/wordpress
 ```
 
-## 6️⃣ 기술 스택
+## 7️⃣ 기술 스택
 	•	운영체제: Debian (VirtualBox 환경)
 	•	서비스: SSH, UFW, cron, sudo, WordPress, MariaDB, vsftpd
 	•	보안: PAM 모듈, 비밀번호 정책, 방화벽 설정
