@@ -99,7 +99,7 @@ Born2beroot는 리눅스 운영체제를 설치하고 보안 규칙 및 사용�
 * LVM (Logical Volume Manager): 물리 디스크를 논리적으로 묶어 유연한 관리 가능.
 	- PV(Physical Volume) → VG(Volume Group) → LV(Logical Volume) 구조.
 
-⸻
+---
 
 ### (5) SUDO
 * sudo 설치 여부 확인 (sudo --version).
